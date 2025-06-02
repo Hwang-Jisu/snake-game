@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Snake game</title>
+  <link rel="stylesheet" href="./src/css/main.css">
+  <script defer src="./src/js/main.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🐍 Snake Game 🐍</h1>
+    <canvas id="game" width="600" height="600"></canvas>
+    <div class="controls">
+      <div id="startBtn">😎 Game Start 😎</div>
+      <select id="difficult">
+        <option value="150">🐢 Slow 🐢</option>
+        <option value="100" selected>🐾 Normal 🐾</option>
+        <option value="50">🐎 fast 🐎</option>
+      </select>
+    </div>
+    <div class="scoreBoard">
+      <p id="score">💛 Score : 0 💛</p>
+      <div id="highScore">💖 Best Score : 0 💖</div>
+    </div>
+  </div>
+</body>
+</html>
