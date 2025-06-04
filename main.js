@@ -14,8 +14,17 @@ function resizeCanvas() {
   const wrap = document.querySelector(".wrap");
   // wrap의 너비와 화면 높이 * 0.9 중 작은 값을 캔버스 크기로 사용
   const size = Math.min(wrap.clientWidth, window.innerHeight * 0.9);
-  canvas.width = size;
-  canvas.height = size;
+  const dpr = window.devicePixelRatio || 1;
+
+  canvas.style.width = `${size}px`;
+  canvas.style.height = `${size}px`;
+
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.scale(dpr,dpr);
+  
   gridSize = canvas.width / tileCount; // 한 칸 크기 계산
 }
 resizeCanvas();
@@ -23,15 +32,11 @@ resizeCanvas();
 // 화면 크기 변경 시 캔버스 크기도 다시 계산, 그리고 화면 갱신
 window.addEventListener("resize", () => {
   resizeCanvas();
-  draw();
-});
-
-// 최초 페이지 진입 시 화면을 가운데로 부드럽게 스크롤 (가로 세로 중앙)
-// 단, 이 동작은 페이지 구조와 내용에 따라 달라질 수 있음
-window.scrollTo({
-  top: document.body.scrollHeight / 2,
-  left: document.body.scrollWidth / 2,
-  behavior: "smooth"
+  if (gameRunning) {
+    draw();
+  } else {
+    drawIntro();
+  }
 });
 
 // 게임 중일 때만 터치, 휠 스크롤 막는 이벤트 함수
@@ -41,17 +46,19 @@ function blockMobileScroll(e) {
   }
 }
 
+const scrollEvents = ["touchstart", "touchmove", "wheel", "pointermove", "gesturestart"];
+
 // 게임 중 스크롤 막기 이벤트 등록 함수
 function enableScrollBlock() {
-  ["touchstart", "touchmove", "wheel", "pointermove", "gesturestart"].forEach(eventName => {
+  scrollEvents.forEach(eventName => {
     document.body.addEventListener(eventName, blockMobileScroll, { passive: false });
   });
 }
 
 // 게임 중이 아닐 때 스크롤 막기 이벤트 제거 함수
 function disableScrollBlock() {
-  ["touchstart", "touchmove", "wheel", "pointermove", "gesturestart"].forEach(eventName => {
-    document.body.removeEventListener(eventName, blockMobileScroll, { passive: false });
+  scrollEvents.forEach(eventName => {
+    document.body.removeEventListener(eventName, blockMobileScroll,false);
   });
 }
 
