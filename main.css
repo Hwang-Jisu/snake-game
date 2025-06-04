@@ -6,9 +6,8 @@ a {text-decoration: none; color: inherit;}
 body {font-family: "고딕", Gothic, sans-serif; text-align: center;}
 
 .wrap {
-  width: 800px;
+  width: 600px;
   margin: 0 auto;
-  touch-action: none;
 }
 
 .wrap h1 {
@@ -45,4 +44,5 @@ canvas {
 .scoreBoard #score {
   margin-bottom: 10px;
 }
+
 
