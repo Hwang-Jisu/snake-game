@@ -12,8 +12,10 @@ let gameRunning = false;
 // 캔버스 크기를 부모 .wrap 요소 너비에 맞추고 세로 크기는 화면 높이의 90% 내에서 결정
 function resizeCanvas() {
   const wrap = document.querySelector(".wrap");
+  const rawWidth = wrap.clientWidth;
+  const rawHeight = window.innerHeight * 0.9;
   // wrap의 너비와 화면 높이 * 0.9 중 작은 값을 캔버스 크기로 사용
-  const size = Math.min(wrap.clientWidth, window.innerHeight * 0.9);
+  const size = Math.max(100, Math.min(rawWidth, rawHeight));
   const dpr = window.devicePixelRatio || 1;
 
   canvas.style.width = `${size}px`;
